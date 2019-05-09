@@ -9,6 +9,6 @@ public class Concatenation {
         String concat = firstS + secondS;
         long finish = Long.parseLong(concat);
 
-        return finish >= Integer.MAX_VALUE ? 0 : (int)finish;
+        return Integer.MIN_VALUE >= finish || finish >= Integer.MAX_VALUE ? 0 : (int)finish;
     }
 }
