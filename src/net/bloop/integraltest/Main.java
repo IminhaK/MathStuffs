@@ -1,6 +1,7 @@
 package net.bloop.integraltest;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -8,25 +9,35 @@ public class Main {
     GOAL: Find the combination of three numbers that is closest to 100 in the form
     integral from a to b of x^c where a b and c are numbers 1-9 and do not repeat
     single digits only. (no 83, 8.3, 8/3, etc)
+
+    ADDITION: allow a and b to be any numbers, skip times when b < a
+    NOTE: if lower limit is 1 any value for max above 14 will return a = 5, b=15, c=1 which is exactly 100
      */
 
-    private static ArrayList<NumberGroup> values = new ArrayList<NumberGroup>();
+    private static ArrayList<NumberGroup> values = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
+        System.out.print("Enter the lower limit: ");
+        int MIN = scanner.nextInt();
+
+        System.out.print("Enter the upper limit: ");
+        int MAX = scanner.nextInt();
+
         //try each number as a
-        for(int a = 1; a <= 9; a++)
+        for(int a = MIN; a <= MAX; a++)
         {
             //try each remaining number as b
-            for(int b = 1; b <= 9; b++)
+            for(int b = MIN; b <= MAX; b++)
             {
-                if(b == a)
+                if(b == a || b < a)
                     continue;
 
                 //try each remaining number as c
-                for(int c = 1; c <= 9; c++)
+                for(int c = MIN; c <= MAX; c++)
                 {
-                    if(c == b || c == a)
+                    if(c == b)
                         continue;
 
                     double value = Math.pow(b, c+1)/(c+1) - Math.pow(a, c+1)/(c+1);
