@@ -1,4 +1,4 @@
-package net.bloop.concatinationtest;
+package net.bloop.concatenationtest;
 
 public class Concatenation {
 

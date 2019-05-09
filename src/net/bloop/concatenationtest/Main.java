@@ -1,4 +1,4 @@
-package net.bloop.concatinationtest;
+package net.bloop.concatenationtest;
 
 import java.util.Scanner;
 
