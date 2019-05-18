@@ -47,6 +47,9 @@ public class Main {
                 System.out.println("Card1: " + card1.getType());
                 System.out.println("Card2: " + card2.getType());
 
+                System.out.println("Deck1 size: " + deck1.size());
+                System.out.println("Deck2 size: " + deck2.size());
+
                 deck1.remove(0);
                 deck2.remove(0);
                 deck1.add(card1);
@@ -55,6 +58,8 @@ public class Main {
             else if(card1.getType() == card2.getType())
             {
                 System.out.println("War!");
+                System.out.println("Deck1 size: " + deck1.size());
+                System.out.println("Deck2 size: " + deck2.size());
                 war(1);
             }
             else //deck2 wins
@@ -63,36 +68,45 @@ public class Main {
                 System.out.println("Card1: " + card1.getType());
                 System.out.println("Card2: " + card2.getType());
 
+                System.out.println("Deck1 size: " + deck1.size());
+                System.out.println("Deck2 size: " + deck2.size());
+
                 deck1.remove(0);
                 deck2.remove(0);
                 deck2.add(card2);
                 deck2.add(card1);
             }
         }
+
+        if(deck1.size() == 0)
+            System.out.println("Deck2 wins!");
+        if(deck2.size() == 0)
+            System.out.println("Deck1 wins!");
     }
 
 
     private static ArrayList<Card> warCards1 = new ArrayList<>();
     private static ArrayList<Card> warCards2 = new ArrayList<>();
 
+    //TODO: Cards go missing after a war. Not intended.
     private static void war(int warIndex)
     {
         int checking = (warIndex *4) + 1;
         if(!warCards1.isEmpty())
-            warCards1.clear();
+            warCards1.removeAll(warCards1);
         if(!warCards2.isEmpty())
-            warCards2.clear();
+            warCards2.removeAll(warCards2);
 
         //add cards that will be given up
         for(int i = 0; i < checking; i++)
         {
-            if(deck1.get(i) != null)
+            if(i < warCards1.size())
                 warCards1.add(deck1.get(i));
-            if(deck2.get(i) != null)
+            if(i < warCards2.size())
                 warCards2.add(deck2.get(i));
         }
 
-        if(!(deck1.size() < 5 || deck2.size() < 5)) //if they have enough cards to do regular war
+        if(!(deck1.size() < (4 * warIndex) || deck2.size() < (4 * warIndex))) //if they have enough cards to do regular war
         {
             if(deck1.get(checking).getType() > deck2.get(checking).getType()) //deck1 wins
             {
@@ -108,7 +122,10 @@ public class Main {
                 warCards2.clear();
             } else if(deck1.get(checking).getType() == deck1.get(checking).getType())
             {
-                war(warIndex++);
+                System.out.println("Warring again");
+                System.out.println("Deck1 size: " + deck1.size());
+                System.out.println("Deck2 size: " + deck2.size());
+                war(warIndex + 1);
             } else //deck2 wins
             {
                 for(int i = 0; i < checking; i++)
@@ -117,8 +134,8 @@ public class Main {
                     deck2.remove(0);
                 }
 
-                deck2.addAll(warCards1);
                 deck2.addAll(warCards2);
+                deck2.addAll(warCards1);
                 warCards1.clear();
                 warCards2.clear();
             }
